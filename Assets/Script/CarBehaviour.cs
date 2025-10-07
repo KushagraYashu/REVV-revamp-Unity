@@ -152,7 +152,6 @@ public class CarBehaviour : MonoBehaviour
             if (axleInfo.motor && !this.handBrake)
             {
                 Debug.Log(axleInfo.leftWheel.rpm);
-                Debug.LogWarning(axleInfo.leftWheel.motorTorque);
                 axleInfo.leftWheel.brakeTorque = 0;
                 axleInfo.rightWheel.brakeTorque = 0;
 
@@ -162,13 +161,15 @@ public class CarBehaviour : MonoBehaviour
                     axleInfo.rightWheel.motorTorque = 0;
                 }
 
-                if(motorVal > 0)
+                else if(motorVal > 0)
                 {
+                    reverse = false;
+
                     axleInfo.leftWheel.motorTorque = (motorVal / 2) ;
                     axleInfo.rightWheel.motorTorque = (motorVal / 2) ;
                 }
 
-                if(motorVal < 0 && axleInfo.leftWheel.rpm > 20f)
+                else if(motorVal < 0 && (axleInfo.leftWheel.rpm > 20f || axleInfo.rightWheel.rpm > 20f))
                 {
                     reverse = false;
                     axleInfo.leftWheel.motorTorque = 0;
